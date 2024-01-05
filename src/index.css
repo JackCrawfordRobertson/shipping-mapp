@@ -5,6 +5,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden; /* Disables horizontal scroll */
   overflow-y: hidden; /* Disables vertical scroll */
+  background-color: #ffffff;
 }
 
 code {
