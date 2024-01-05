@@ -9,7 +9,7 @@ import "./App.css";
 mapboxgl.accessToken = "pk.eyJ1IjoiamFja3JvYiIsImEiOiJjanZ1bDBrdjUxYmgyNGJtczlxdWl3MzRuIn0.qla3sSgkkyxIkbYLvVsceA";
 
 const cleanNumber = (str) => {
-    if (str.includes('days')) {
+    if (str.includes("days")) {
         return parseFloat(str);
     }
     return Number(str.replace(/[^0-9.-]+/g, ""));
@@ -60,40 +60,64 @@ const reversedPurpleBlue = [
 ].reverse();
 
 const MapComponent = () => {
-    const [open, setOpen] = useState(false);
-    const [selectedRoute, setSelectedRoute] = useState(null);
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+    const [ open, setOpen ] = useState(false);
+    const [ selectedRoute, setSelectedRoute ] = useState(null);
+    const [ screenWidth, setScreenWidth ] = useState(window.innerWidth);
 
     const radarData = [
-        { category: "Total Miles", categoryName: "totalMiles", EU: euRouteData.totalMiles, SA: saRouteData.totalMiles },
-        { category: "Cost", categoryName: "cost", EU: euRouteData.cost, SA: saRouteData.cost },
-        { category: "Emissions", categoryName: "emissions", EU: euRouteData.emissions, SA: saRouteData.emissions },
-        { category: "Risk Level", categoryName: "riskLevel", EU: euRouteData.riskLevel, SA: saRouteData.riskLevel },
-        { category: "Duration", categoryName: "duration", EU: euRouteData.duration, SA: saRouteData.duration },
+        {category: "Total Miles", categoryName: "totalMiles", EU: euRouteData.totalMiles, SA: saRouteData.totalMiles},
+        {category: "Cost", categoryName: "cost", EU: euRouteData.cost, SA: saRouteData.cost},
+        {category: "Emissions", categoryName: "emissions", EU: euRouteData.emissions, SA: saRouteData.emissions},
+        {category: "Risk Level", categoryName: "riskLevel", EU: euRouteData.riskLevel, SA: saRouteData.riskLevel},
+        {category: "Duration", categoryName: "duration", EU: euRouteData.duration, SA: saRouteData.duration},
     ];
 
     const renderRouteData = () => {
         if (selectedRoute === "EU") {
             return (
                 <div>
-                    <p><b>Total Miles:</b> {euRouteDataDisplay.totalMiles}</p>
-                    <p><b>Cost:</b> {euRouteDataDisplay.cost}</p>
-                    <p><b>Emissions:</b> {euRouteDataDisplay.emissions}</p>
-                    <p><b>Duration:</b>{euRouteDataDisplay.duration}</p>
-                    <p><b>Risk Level: </b>{euRouteDataDisplay.riskLevel}</p>
+                    <p>
+                        <b>Total Miles:</b> {euRouteDataDisplay.totalMiles}
+                    </p>
+                    <p>
+                        <b>Cost:</b> {euRouteDataDisplay.cost}
+                    </p>
+                    <p>
+                        <b>Emissions:</b> {euRouteDataDisplay.emissions}
+                    </p>
+                    <p>
+                        <b>Duration:</b>
+                        {euRouteDataDisplay.duration}
+                    </p>
+                    <p>
+                        <b>Risk Level: </b>
+                        {euRouteDataDisplay.riskLevel}
+                    </p>
                 </div>
             );
-        } else if (selectedRoute === "SA") {
+        }
+        else if (selectedRoute === "SA") {
             return (
                 <div>
-                    <p><b>Total Miles:</b> {saRouteDataDisplay.totalMiles}</p>
-                    <p><b>Cost:</b> {saRouteDataDisplay.cost}</p>
-                    <p><b>Emissions:</b> {saRouteDataDisplay.emissions}</p>
-                    <p><b>Duration:</b> {saRouteDataDisplay.duration}</p>
-                    <p><b>Risk Level:</b> {saRouteDataDisplay.riskLevel}</p>
+                    <p>
+                        <b>Total Miles:</b> {saRouteDataDisplay.totalMiles}
+                    </p>
+                    <p>
+                        <b>Cost:</b> {saRouteDataDisplay.cost}
+                    </p>
+                    <p>
+                        <b>Emissions:</b> {saRouteDataDisplay.emissions}
+                    </p>
+                    <p>
+                        <b>Duration:</b> {saRouteDataDisplay.duration}
+                    </p>
+                    <p>
+                        <b>Risk Level:</b> {saRouteDataDisplay.riskLevel}
+                    </p>
                 </div>
             );
-        } else {
+        }
+        else {
             return <p>Data not available for the selected route.</p>;
         }
     };
@@ -101,9 +125,11 @@ const MapComponent = () => {
     const renderRouteDescription = () => {
         if (selectedRoute === "SA") {
             return "Shipping route around the Cape of Good Hope";
-        } else if (selectedRoute === "EU") {
+        }
+        else if (selectedRoute === "EU") {
             return "Shipping route through the Suez Canal";
-        } else {
+        }
+        else {
             return "Select a shipping route to view data";
         }
     };
@@ -115,45 +141,43 @@ const MapComponent = () => {
         cost: 1,
         riskLevel: 20,
         duration: 10000,
-        emissions: .2
+        emissions: 0.2,
     };
-    
+
     const MAX_SCALING_FACTORS_SA = {
         totalMiles: 500,
         cost: 6,
         riskLevel: 60,
         duration: 120000,
-        emissions: 1
+        emissions: 1,
     };
-    
+
     const getScalingFactor = (value, maxFactor) => {
         const factor = maxEmissions / value;
         return factor > maxFactor ? maxFactor : factor;
     };
-    
+
     const scalingFactorsEU = {
         totalMiles: getScalingFactor(euRouteData.totalMiles, MAX_SCALING_FACTORS_EU.totalMiles),
         cost: getScalingFactor(euRouteData.cost, MAX_SCALING_FACTORS_EU.cost),
         riskLevel: getScalingFactor(euRouteData.riskLevel, MAX_SCALING_FACTORS_EU.riskLevel),
         duration: getScalingFactor(euRouteData.duration, MAX_SCALING_FACTORS_EU.duration),
-        emissions: MAX_SCALING_FACTORS_EU.emissions
+        emissions: MAX_SCALING_FACTORS_EU.emissions,
     };
-    
+
     const scalingFactorsSA = {
         totalMiles: getScalingFactor(saRouteData.totalMiles, MAX_SCALING_FACTORS_SA.totalMiles),
         cost: getScalingFactor(saRouteData.cost, MAX_SCALING_FACTORS_SA.cost),
         riskLevel: getScalingFactor(saRouteData.riskLevel, MAX_SCALING_FACTORS_SA.riskLevel),
         duration: getScalingFactor(saRouteData.duration, MAX_SCALING_FACTORS_SA.duration),
-        emissions: MAX_SCALING_FACTORS_SA.emissions
+        emissions: MAX_SCALING_FACTORS_SA.emissions,
     };
-    
-    const scaledRadarData = radarData.map(item => ({
+
+    const scaledRadarData = radarData.map((item) => ({
         category: item.category,
         EU: item.EU * scalingFactorsEU[item.categoryName],
         SA: item.SA * scalingFactorsSA[item.categoryName],
     }));
-    
-    
 
     const handleClick = (route) => {
         setSelectedRoute(route);
@@ -268,7 +292,7 @@ const MapComponent = () => {
     };
 
     console.log("radarData", radarData);
-console.log("scaledRadarData", scaledRadarData);
+    console.log("scaledRadarData", scaledRadarData);
 
     return (
         <div style={{display: "flex", flexDirection: "column", height: "100vh", margin: "2em"}}>
@@ -285,7 +309,9 @@ console.log("scaledRadarData", scaledRadarData);
             <div id="map" style={{flex: 1}} />
 
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle><b>{renderRouteDescription()}</b></DialogTitle>
+                <DialogTitle>
+                    <b>{renderRouteDescription()}</b>
+                </DialogTitle>
                 <DialogContent style={dialogContentStyles}>
                     <div
                         style={{
@@ -297,7 +323,6 @@ console.log("scaledRadarData", scaledRadarData);
                             overflow: "hidden",
                         }}
                     >
-                        
                         <Radar
                             data={scaledRadarData}
                             keys={[ selectedRoute ]}
@@ -312,11 +337,10 @@ console.log("scaledRadarData", scaledRadarData);
                             height={radarSize}
                             enableHover={false} // Disable hover interaction
                             isInteractive={false} // Disable all interactivity
-
                         />
                     </div>
-                {renderRouteData()} {/* Render the data based on the selected route */}
-            </DialogContent>
+                    {renderRouteData()} {/* Render the data based on the selected route */}
+                </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Close</Button>
                 </DialogActions>
