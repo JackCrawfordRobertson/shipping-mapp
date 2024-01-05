@@ -278,7 +278,7 @@ console.log("scaledRadarData", scaledRadarData);
                 </h1>
                 <p className="responsive-paragraph">
                     You are a supertanker departing Dubai, carrying 320,000 m³ of oil. Explore the shipping route and
-                    click on it to learn how piracy near Djibouti impacts oil tanker diversions, and understand their
+                    click on it to learn how Houthi piracy has impacted shipping diversions, and understand their
                     environmental and economic repercussions.
                 </p>
             </div>
