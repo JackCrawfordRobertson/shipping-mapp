@@ -76,11 +76,11 @@ const MapComponent = () => {
         if (selectedRoute === "EU") {
             return (
                 <div>
-                    <p>Total Miles: {euRouteDataDisplay.totalMiles}</p>
-                    <p>Cost: {euRouteDataDisplay.cost}</p>
-                    <p>Emissions: {euRouteDataDisplay.emissions}</p>
-                    <p>Duration: {euRouteDataDisplay.duration}</p>
-                    <p>Risk Level: {euRouteDataDisplay.riskLevel}</p>
+                    <p><b>Total Miles:</b> {euRouteDataDisplay.totalMiles}</p>
+                    <p><b>Cost:</b> {euRouteDataDisplay.cost}</p>
+                    <p><b>Emissions:</b> {euRouteDataDisplay.emissions}</p>
+                    <p><b>Duration:</b>{euRouteDataDisplay.duration}</p>
+                    <p><b>Risk Level: </b>{euRouteDataDisplay.riskLevel}</p>
                 </div>
             );
         } else if (selectedRoute === "SA") {
@@ -181,7 +181,7 @@ const MapComponent = () => {
                 type: "line",
                 source: "china-eu-route-eu",
                 layout: {"line-join": "round", "line-cap": "round"},
-                paint: {"line-color": "#ff0000", "line-width": 2},
+                paint: {"line-color": "#2881B4", "line-width": 2},
             });
 
             // Add an invisible, wider layer for EU route for improved click/tap area
@@ -210,7 +210,7 @@ const MapComponent = () => {
                 type: "line",
                 source: "china-eu-route-sa",
                 layout: {"line-join": "round", "line-cap": "round"},
-                paint: {"line-color": "#0000ff", "line-width": 2},
+                paint: {"line-color": "#5BAFD7", "line-width": 2},
             });
 
             // Add an invisible, wider layer for SA route for improved click/tap area
